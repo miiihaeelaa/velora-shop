@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VELORA SHOP | Magazin Online</title>
+<meta name="description" content="VELORA SHOP - magazin online demonstrativ creat de MP Creative Studio.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#25221f;
+  --gold:#b58e5b;
+  --cream:#f8f5f0;
+  --border:#e7dfd6;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {margin:0;font-family:"DM Sans",sans-serif;color:var(--black)}
+button,input {font:inherit}
+button {cursor:pointer}
+a {text-decoration:none;color:inherit}
+.container {width:min(1180px,92%);margin:auto}
+.announcement {background:var(--black);color:white;text-align:center;padding:11px;font-size:12px}
+header {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 0}
+.logo {font-family:"Playfair Display",serif;font-size:29px;letter-spacing:2px;font-weight:700}
+.logo span {color:var(--gold)}
+.cart-button {border:1px solid var(--border);background:white;padding:12px 18px;border-radius:30px}
+#cartCount {background:var(--gold);color:white;border-radius:50%;padding:3px 7px;margin-left:5px}
+nav {border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+nav .container {display:flex;justify-content:center;flex-wrap:wrap;gap:26px;padding:16px;font-size:13px;font-weight:700}
+nav a:hover {color:var(--gold)}
+.hero {background:linear-gradient(90deg,#16120edb,#16120e40),url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85") center/cover;min-height:480px;display:flex;align-items:center;color:white}
+.hero .container {padding:70px 0}
+.eyebrow {font-size:12px;letter-spacing:3px;text-transform:uppercase}
+.hero h1 {font:600 clamp(38px,5vw,65px)/1.15 "Playfair Display",serif;max-width:650px}
+.hero p {max-width:480px;line-height:1.8}
+.btn {display:inline-block;border:0;background:var(--gold);color:white;padding:15px 24px;font-weight:700;margin-top:14px}
+.btn:hover {background:#977244}
+.perks {display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:27px 0;text-align:center;border-bottom:1px solid var(--border)}
+.perks strong {display:block;margin-bottom:6px}
+.perks span {color:#777;font-size:13px}
+section {padding:65px 0}
+.heading {text-align:center;margin-bottom:32px}
+.heading h2 {font:600 38px "Playfair Display",serif;margin:12px 0}
+.heading p {color:#777}
+.categories {display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.category {border:1px solid var(--border);cursor:pointer;text-align:center;background:white}
+.category img {width:100%;height:220px;object-fit:cover}
+.category h3 {font-size:16px;padding:6px}
+.shop {background:var(--cream)}
+.toolbar {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:25px}
+.search {padding:13px;border:1px solid var(--border);flex:1;min-width:190px}
+.filters {display:flex;flex-wrap:wrap;gap:7px}
+.filter {padding:12px;border:1px solid var(--border);background:white}
+.filter.active {background:var(--black);color:white}
+.products {display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.product {background:white;border:1px solid var(--border)}
+.photo {position:relative}
+.photo img {width:100%;height:230px;object-fit:cover}
+.discount {position:absolute;top:10px;left:10px;background:#a95643;color:white;padding:6px;font-size:12px}
+.info {padding:16px}
+.info small {color:#777}
+.info h3 {font-size:15px;min-height:42px}
+.price {font-weight:700;font-size:19px}
+.old {color:#999;text-decoration:line-through;font-size:13px;margin-left:8px}
+.add {background:var(--black);color:white;border:0;padding:13px;width:100%;margin-top:15px}
+.add:hover {background:var(--gold)}
+.promo {background:var(--black);color:white;text-align:center;padding:65px 20px}
+.promo h2 {font:600 40px "Playfair Display",serif}
+.about {max-width:750px;margin:auto;text-align:center;line-height:1.9}
+.about h2 {font:600 36px "Playfair Display",serif}
+footer {background:#1e1b18;color:white;text-align:center;padding:40px 15px}
+footer p {font-size:12px;color:#aaa}
+.overlay {position:fixed;inset:0;background:#0008;display:none;z-index:10}
+.overlay.open {display:block}
+.drawer {position:fixed;right:0;top:0;bottom:0;width:min(430px,100%);background:white;z-index:11;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column}
+.drawer.open {transform:translateX(0)}
+.drawer-head {display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid var(--border)}
+.close {border:0;background:none;font-size:30px}
+.cart-items {padding:20px;overflow:auto;flex:1}
+.cart-item {display:grid;grid-template-columns:70px 1fr auto;gap:12px;border-bottom:1px solid var(--border);padding:14px 0}
+.cart-item img {width:70px;height:70px;object-fit:cover}
+.cart-item h4 {margin:0 0 7px;font-size:13px}
+.cart-item p {margin:0 0 8px}
+.qty button {background:white;border:1px solid var(--border);padding:3px 9px}
+.qty {display:flex;align-items:center;gap:10px}
+.remove {border:0;background:none;color:#a95643;font-size:12px}
+.cart-bottom {padding:20px;border-top:1px solid var(--border)}
+.total {display:flex;justify-content:space-between;font-weight:700;font-size:20px}
+.cart-bottom .btn {width:100%}
+.note {font-size:12px;color:#777;line-height:1.6}
+.modal {position:fixed;inset:0;background:#0009;z-index:20;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open {display:flex}
+.modal-card {background:white;padding:28px;width:min(480px,100%);position:relative}
+.modal-card h2 {font-family:"Playfair Display",serif}
+.modal-card label {display:block;margin-top:12px;font-size:13px}
+.modal-card input {display:block;width:100%;padding:12px;margin-top:5px;border:1px solid var(--border)}
+.modal-card .btn {width:100%}
+.empty {text-align:center;color:#777;grid-column:1/-1;padding:25px}
+@media(max-width:900px) {
+  .categories,.products {grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px) {
+  .logo {font-size:21px}
+  nav .container {gap:14px;font-size:11px}
+  .hero {min-height:410px}
+  .perks {grid-template-columns:1fr}
+  .category img {height:145px}
+  .products,.categories {gap:10px}
+  .photo img {height:160px}
+  .info {padding:11px}
+  .info h3 {font-size:13px}
+  .price {font-size:16px}
+  .heading h2 {font-size:30px}
+  section {padding:45px 0}
+}
+</style>
+</head>
+<body>
+
+<div class="announcement">
+  ✦ OFERTE SPECIALE DE SEZON · PÂNĂ LA -35% · MAGAZIN DEMONSTRATIV ✦
+</div>
+
+<header class="container">
+  <a class="logo" href="#acasa">VELORA <span>SHOP</span></a>
+  <button class="cart-button" onclick="openCart()">
+    🛍 Coș <span id="cartCount">0</span>
+  </button>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="#acasa">ACASĂ</a>
+    <a href="#categorii">CATEGORII</a>
+    <a href="#produse">PRODUSE</a>
+    <a href="#oferte">OFERTE</a>
+    <a href="#despre">DESPRE NOI</a>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero" id="acasa">
+  <div class="container">
+    <div class="eyebrow">Colecția Home & Lifestyle</div>
+    <h1>Lucruri frumoase.<br>Momente mai bune.</h1>
+    <p>Descoperă produse pentru casă, bucătărie și viața de zi cu zi. Design modern, inspirație și confort.</p>
+    <a class="btn" href="#produse">DESCOPERĂ PRODUSELE →</a>
+  </div>
+</div>
+
+<div class="container perks">
+  <div><strong>✦ Produse atent selectate</strong><span>Idei practice și design modern</span></div>
+  <div><strong>✦ Oferte speciale</strong><span>Prețuri demonstrative atractive</span></div>
+  <div><strong>✦ Experiență simplă</strong><span>Explorează și adaugă în coș</span></div>
+</div>
+
+<section class="container" id="categorii">
+  <div class="heading">
+    <div class="eyebrow">Descoperă colecțiile</div>
+    <h2>Categorii populare</h2>
+    <p>Alege ceea ce se potrivește stilului tău</p>
+  </div>
+  <div class="categories">
+    <div class="category" onclick="chooseCategory('Casă')">
+      <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=80" alt="Casă și decor">
+      <h3>Casă & Decor →</h3>
+    </div>
+    <div class="category" onclick="chooseCategory('Bucătărie')">
+      <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=700&q=80" alt="Bucătărie">
+      <h3>Bucătărie →</h3>
+    </div>
+    <div class="category" onclick="chooseCategory('Gadgeturi')">
+      <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=700&q=80" alt="Gadgeturi">
+      <h3>Gadgeturi →</h3>
+    </div>
+    <div class="category" onclick="chooseCategory('Lifestyle')">
+      <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=700&q=80" alt="Lifestyle">
+      <h3>Lifestyle →</h3>
+    </div>
+  </div>
+</section>
+
+<section class="shop" id="produse">
+  <div class="container">
+    <div class="heading">
+      <div class="eyebrow">Selecția VELORA</div>
+      <h2>Produsele noastre</h2>
+      <p>Descoperă preferatele colecției</p>
+    </div>
+    <div class="toolbar">
+      <input class="search" id="search" placeholder="Caută un produs..." oninput="renderProducts()">
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="products" id="productGrid"></div>
+  </div>
+</section>
+
+<div class="promo" id="oferte">
+  <div class="eyebrow">Oferte de sezon</div>
+  <h2>Detalii care fac diferența</h2>
+  <p>Explorează produsele cu prețuri reduse din colecția demonstrativă.</p>
+  <button class="btn" onclick="showOffers()">VEZI OFERTELE →</button>
+</div>
+
+<section id="despre">
+  <div class="container about">
+    <div class="eyebrow">Despre VELORA</div>
+    <h2>Mai mult decât un magazin</h2>
+    <p>VELORA SHOP este un concept de magazin online creat pentru a demonstra o experiență modernă de cumpărare: produse, categorii, căutare, filtrare și coș interactiv.</p>
+    <p>Produsele și prețurile sunt demonstrative, nu oferte comerciale reale.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="logo">VELORA <span>SHOP</span></div>
+  <p>Magazin online demonstrativ · Produsele și prețurile sunt fictive</p>
+  <p>© 2026 VELORA SHOP · Proiect de portofoliu MP Creative Studio</p>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2>Coșul tău</h2>
+    <button class="close" onclick="closeCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-bottom">
+    <div class="total">
+      <span>Total</span>
+      <span id="cartTotal">0 lei</span>
+    </div>
+    <button class="btn" onclick="openCheckout()">FINALIZEAZĂ COMANDA →</button>
+    <p class="note">Demonstrație: nu se efectuează plăți și nu se transmit comenzi reale.</p>
+  </div>
+</aside>
+
+<div class="modal" id="checkoutModal">
+  <div class="modal-card">
+    <button class="close" style="position:absolute;right:18px;top:12px" onclick="closeCheckout()">×</button>
+    <h2>Finalizare comandă</h2>
+    <p class="note">Formular demonstrativ. Datele nu sunt trimise și nu sunt stocate.</p>
+    <form id="checkoutForm" onsubmit="demoOrder(event)">
+      <label>Nume complet
+        <input required placeholder="Nume și prenume">
+      </label>
+      <label>Telefon
+        <input type="tel" required placeholder="07xx xxx xxx">
+      </label>
+      <label>Adresă de livrare
+        <input required placeholder="Stradă, număr, localitate">
+      </label>
+      <button class="btn" type="submit">SIMULEAZĂ COMANDA</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const products = [
+  {
+    id:1,
+    name:"Set căni ceramice Nordic",
+    cat:"Bucătărie",
+    price:89,
+    old:119,
+    img:"https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:2,
+    name:"Vază decorativă Minimal",
+    cat:"Casă",
+    price:69,
+    old:99,
+    img:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:3,
+    name:"Set farfurii elegante",
+    cat:"Bucătărie",
+    price:149,
+    old:199,
+    img:"https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:4,
+    name:"Lampă de birou modernă",
+    cat:"Gadgeturi",
+    price:129,
+    old:169,
+    img:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:5,
+    name:"Pernă decorativă Soft",
+    cat:"Lifestyle",
+    price:49,
+    old:69,
+    img:"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:6,
+    name:"Organizator din lemn",
+    cat:"Casă",
+    price:79,
+    old:109,
+    img:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:7,
+    name:"Cafetieră",
+    cat:"Bucătărie",
+    price:119,
+    old:159,
+    img:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=650&q=80"
+  },
+  {
+    id:8,
+    name:"Căști wireless Urban",
+    cat:"Gadgeturi",
+    price:179,
+    old:229,
+    img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=650&q=80"
+  }
+];
+
+let category = "Toate";
+let offersOnly = false;
+let cart = {};
+
+try {
+  cart = JSON.parse(localStorage.getItem("velora-demo-cart") || "{}");
+} catch(e) {
+  cart = {};
+}
+
+const money = n => new Intl.NumberFormat("ro-RO").format(n) + " lei";
+
+function renderFilters() {
+  const cats = ["Toate","Casă","Bucătărie","Gadgeturi","Lifestyle"];
+  document.getElementById("filters").innerHTML = cats.map(c =>
+    `<button class="filter ${category===c?"active":""}"
+      onclick="chooseCategory('${c}')">${c}</button>`
+  ).join("");
+}
+
+function chooseCategory(c) {
+  category = c;
+  offersOnly = false;
+  renderFilters();
+  renderProducts();
+  document.getElementById("produse").scrollIntoView({behavior:"smooth"});
+}
+
+function showOffers() {
+  category = "Toate";
+  offersOnly = true;
+  renderFilters();
+  renderProducts();
+  document.getElementById("produse").scrollIntoView({behavior:"smooth"});
+}
+
+function renderProducts() {
+  const q = document.getElementById("search").value.toLowerCase();
+
+  const filtered = products.filter(p =>
+    (category==="Toate" || p.cat===category) &&
+    p.name.toLowerCase().includes(q) &&
+    (!offersOnly || p.old>p.price)
+  );
+
+  document.getElementById("productGrid").innerHTML =
+    filtered.length ? filtered.map(p => `
+      <article class="product">
+        <div class="photo">
+          <img src="${p.img}" alt="${p.name}" loading="lazy">
+          <span class="discount">-${Math.round((1-p.price/p.old)*100)}%</span>
+        </div>
+        <div class="info">
+          <small>${p.cat}</small>
+          <h3>${p.name}</h3>
+          <span class="price">${money(p.price)}</span>
+          <span class="old">${money(p.old)}</span>
+          <button class="add" onclick="addToCart(${p.id})">
+            + ADAUGĂ ÎN COȘ
+          </button>
+        </div>
+      </article>
+    `).join("") :
+    '<p class="empty">Nu am găsit produse pentru această căutare.</p>';
+}
+
+function saveCart() {
+  localStorage.setItem("velora-demo-cart",JSON.stringify(cart));
+  renderCart();
+}
+
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  saveCart();
+  openCart();
+}
+
+function changeQty(id,d) {
+  cart[id] = (cart[id] || 0) + d;
+  if(cart[id]<=0) delete cart[id];
+  saveCart();
+}
+
+function removeItem(id) {
+  delete cart[id];
+  saveCart();
+}
+
+function renderCart() {
+  let count=0, total=0;
+
+  const rows = Object.entries(cart).map(([id,qty]) => {
+    const p = products.find(x=>x.id===Number(id));
+    if(!p) return "";
+
+    count += qty;
+    total += p.price*qty;
+
+    return `
+      <div class="cart-item">
+        <img src="${p.img}" alt="${p.name}">
+        <div>
+          <h4>${p.name}</h4>
+          <p>${money(p.price)}</p>
+          <div class="qty">
+            <button onclick="changeQty(${p.id},-1)">−</button>
+            ${qty}
+            <button onclick="changeQty(${p.id},1)">+</button>
+          </div>
+        </div>
+        <button class="remove" onclick="removeItem(${p.id})">Șterge</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("cartItems").innerHTML =
+    rows.join("") || '<p class="empty">Coșul tău este gol.</p>';
+
+  document.getElementById("cartCount").textContent=count;
+  document.getElementById("cartTotal").textContent=money(total);
+}
+
+function openCart() {
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("open");
+}
+
+function closeCart() {
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
+}
+
+function openCheckout() {
+  if(!Object.keys(cart).length) {
+    alert("Adaugă mai întâi un produs în coș.");
+    return;
+  }
+  closeCart();
+  document.getElementById("checkoutModal").classList.add("open");
+}
+
+function closeCheckout() {
+  document.getElementById("checkoutModal").classList.remove("open");
+}
+
+function demoOrder(e) {
+  e.preventDefault();
+  closeCheckout();
+  alert("Comandă demonstrativă! Nu s-a transmis nicio comandă și nu s-a efectuat nicio plată.");
+  document.getElementById("checkoutForm").reset();
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") {
+    closeCart();
+    closeCheckout();
+  }
+});
+
+renderFilters();
+renderProducts();
+renderCart();
+</script>
+
+</body>
+</html>
